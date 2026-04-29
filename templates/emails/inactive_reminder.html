@@ -1,0 +1,79 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+<div class="status-bar warning"><span class="status-dot"></span>Tasks Waiting For You</div>
+{% endblock %}
+
+{% block content %}
+<h1>You have no active plan on Nexcribe</h1>
+<p class="subtitle">{{ writing_count }} writing jobs and {{ transcription_count }} transcription tasks are live right now</p>
+
+<p>Hi {{ username }},</p>
+<p>Your account is active but you do not have a current plan. Tasks are being completed by other writers and transcriptionists right now — activate a plan to start earning.</p>
+
+<!-- Live task counts -->
+<table class="data-table">
+  <thead>
+    <tr><th>Available Right Now</th><th style="text-align:right">Count</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Writing Jobs</td>
+      <td class="td-value td-green">{{ writing_count }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Transcription Tasks</td>
+      <td class="td-value td-green">{{ transcription_count }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Payment on Submission</td>
+      <td class="td-value">Instant — no waiting</td>
+    </tr>
+    <tr>
+      <td class="td-label">Minimum Withdrawal</td>
+      <td class="td-value">$2.00 via M-Pesa</td>
+    </tr>
+  </tbody>
+</table>
+
+{% if sample_writing %}
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:24px 0 8px;">Sample Writing Jobs Available Now</p>
+<table class="data-table">
+  <thead>
+    <tr><th>Job Title</th><th style="text-align:right">Pay (KES)</th></tr>
+  </thead>
+  <tbody>
+    {% for job in sample_writing %}
+    <tr>
+      <td class="td-label">{{ job.title }}</td>
+      <td class="td-value td-green">KES {{ job.budget_kes }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if sample_transcription %}
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:24px 0 8px;">Sample Transcription Tasks Available Now</p>
+<table class="data-table">
+  <thead>
+    <tr><th>Task Title</th><th style="text-align:right">Pay (KES)</th></tr>
+  </thead>
+  <tbody>
+    {% for task in sample_transcription %}
+    <tr>
+      <td class="td-label">{{ task.title }}</td>
+      <td class="td-value td-green">KES {{ task.pay_kes }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+<div class="btn-wrap" style="margin-top:28px;">
+  <a class="btn" href="{{ plans_url }}">Activate a Plan Now</a>
+</div>
+
+<hr class="divider" />
+<p style="font-size:13px;color:#9ca3af;">Plans start from KES 500. Payment is instant the moment you submit a task.</p>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+<div class="status-bar success"><span class="status-dot"></span>Commission Earned</div>
+{% endblock %}
+
+{% block content %}
+<h1>You earned a referral commission</h1>
+<p class="subtitle">From your affiliate network — Level {{ level }}</p>
+
+<p>Hi {{ user.first_name|default:user.username }},</p>
+<p>A member in your referral network has made a transaction and you have earned a commission.</p>
+
+<div class="summary">
+  <div class="amount-label">Commission Earned</div>
+  <div class="amount">${{ amount_usd }}</div>
+  <div class="amount-sub">KES {{ amount_kes }} &nbsp;·&nbsp; Account Wallet</div>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Detail</th><th style="text-align:right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Commission Level</td>
+      <td class="td-value"><span class="badge badge-dark">Level {{ level }}</span></td>
+    </tr>
+    <tr>
+      <td class="td-label">From</td>
+      <td class="td-value">{{ from_user|default:"Your network" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Amount (USD)</td>
+      <td class="td-value td-green">${{ amount_usd }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Amount (KES)</td>
+      <td class="td-value">KES {{ amount_kes }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Credited To</td>
+      <td class="td-value">Account Wallet</td>
+    </tr>
+    <tr>
+      <td class="td-label">Transaction Reference</td>
+      <td class="td-value" style="font-family:monospace;font-size:12px;">{{ txn_code }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note note-success">
+  This commission has been credited to your Account Wallet and is available for withdrawal.
+</div>
+
+<div class="btn-wrap">
+  <a class="btn" href="{{ site_url }}/dashboard/affiliates">View Affiliate Dashboard</a>
+</div>
+{% endblock %}

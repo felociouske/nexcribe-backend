@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{% block subject %}Nexcribe{% endblock %}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0; background: #f2f4f7; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; color: #1a2332; -webkit-font-smoothing: antialiased; }
+  .wrapper { max-width: 600px; margin: 0 auto; padding: 32px 16px 48px; }
+
+  /* Card */
+  .card { background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e3e8ef; }
+
+  /* Header */
+  .header { background: #0a1628; padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; }
+  .header .brand { font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px; }
+  .header .brand span { color: #14b87c; }
+  .header .date { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+  /* Status bar */
+  .status-bar { padding: 14px 40px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; }
+  .status-bar.success { background: #e6f9f0; color: #0a6644; border-bottom: 1px solid #b8eed9; }
+  .status-bar.danger  { background: #fdecea; color: #8b1a1a; border-bottom: 1px solid #f5b7b1; }
+  .status-bar.warning { background: #fff8e6; color: #7a5200; border-bottom: 1px solid #fde5a0; }
+  .status-bar.info    { background: #eaf2ff; color: #1a3d6e; border-bottom: 1px solid #b3d0f7; }
+  .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .status-bar.success .status-dot { background: #14b87c; }
+  .status-bar.danger  .status-dot { background: #e05a2b; }
+  .status-bar.warning .status-dot { background: #f59e0b; }
+  .status-bar.info    .status-dot { background: #3b82f6; }
+
+  /* Body */
+  .body { padding: 36px 40px; }
+  h1 { font-size: 22px; font-weight: 700; color: #0a1628; margin: 0 0 8px; }
+  .subtitle { font-size: 14px; color: #6b7280; margin: 0 0 28px; }
+  p { font-size: 15px; line-height: 1.7; color: #374151; margin: 0 0 16px; }
+
+  /* Summary box */
+  .summary { background: #f8fafc; border: 1px solid #e3e8ef; border-radius: 6px; padding: 20px 24px; margin: 24px 0; }
+  .summary .amount-label { font-size: 12px; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .summary .amount { font-size: 32px; font-weight: 800; color: #0a1628; line-height: 1; }
+  .summary .amount-sub { font-size: 13px; color: #6b7280; margin-top: 4px; }
+
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .data-table th { background: #f8fafc; padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e3e8ef; }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid #f0f2f5; color: #374151; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table .td-label { color: #6b7280; font-size: 13px; }
+  .data-table .td-value { font-weight: 600; color: #0a1628; text-align: right; }
+  .data-table .td-green { color: #0a6644; font-weight: 700; }
+  .data-table .td-red { color: #c0392b; font-weight: 700; }
+  .data-table tr.total-row td { background: #f8fafc; font-weight: 700; border-top: 2px solid #e3e8ef; }
+
+  /* Badge */
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .badge-green  { background: #e6f9f0; color: #0a6644; }
+  .badge-red    { background: #fdecea; color: #8b1a1a; }
+  .badge-amber  { background: #fff8e6; color: #7a5200; }
+  .badge-blue   { background: #eaf2ff; color: #1a3d6e; }
+  .badge-dark   { background: #1a2332; color: #ffffff; }
+
+  /* Transaction ID */
+  .txn-row { background: #f8fafc; border: 1px solid #e3e8ef; border-radius: 6px; padding: 12px 16px; margin: 20px 0; display: flex; align-items: center; justify-content: space-between; }
+  .txn-row .txn-label { font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; }
+  .txn-row .txn-code { font-family: 'Courier New', monospace; font-size: 13px; font-weight: 700; color: #0a1628; letter-spacing: 1px; }
+
+  /* CTA button */
+  .btn-wrap { text-align: center; margin: 28px 0 8px; }
+  .btn { display: inline-block; background: #14b87c; color: #ffffff !important; text-decoration: none; padding: 13px 32px; border-radius: 6px; font-weight: 700; font-size: 14px; letter-spacing: 0.2px; }
+  .btn-outline { display: inline-block; background: transparent; color: #0a1628 !important; text-decoration: none; padding: 12px 32px; border-radius: 6px; font-weight: 600; font-size: 14px; border: 2px solid #e3e8ef; }
+  .btn-danger { background: #e05a2b; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid #f0f2f5; margin: 28px 0; }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li { padding: 7px 0; font-size: 14px; color: #374151; display: flex; align-items: flex-start; gap: 10px; }
+  .checklist li::before { content: ''; display: block; width: 18px; height: 18px; background: #14b87c; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 8l3.5 3.5L13 4' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: cover; }
+
+  /* Alert note */
+  .note { background: #fff8e6; border-left: 3px solid #f59e0b; border-radius: 0 6px 6px 0; padding: 12px 16px; margin: 20px 0; font-size: 13px; color: #7a5200; line-height: 1.6; }
+  .note-danger { background: #fdecea; border-left-color: #e05a2b; color: #8b1a1a; }
+  .note-success { background: #e6f9f0; border-left-color: #14b87c; color: #0a6644; }
+
+  /* Footer */
+  .footer { background: #f8fafc; border-top: 1px solid #e3e8ef; padding: 24px 40px; }
+  .footer p { font-size: 12px; color: #9ca3af; margin: 0 0 4px; line-height: 1.6; }
+  .footer a { color: #14b87c; text-decoration: none; }
+  .footer .footer-links { margin-top: 12px; }
+  .footer .footer-links a { font-size: 12px; color: #6b7280; text-decoration: none; margin: 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+<div class="card">
+
+  <div class="header">
+    <div class="brand">Nex<span>cribe</span></div>
+    <div class="date">{% now "j N Y" %}</div>
+  </div>
+
+  {% block status_bar %}{% endblock %}
+
+  <div class="body">
+    {% block content %}{% endblock %}
+  </div>
+
+  <div class="footer">
+    <p>This email was sent to {{ user.email }} regarding your Nexcribe account.</p>
+    <p>Questions? <a href="mailto:support@nexcribe.com">support@nexcribe.com</a></p>
+    <div class="footer-links">
+      <a href="{{ site_url }}/dashboard">Dashboard</a>
+      <a href="{{ site_url }}/dashboard/wallet">Wallet</a>
+      <a href="mailto:support@nexcribe.com">Support</a>
+    </div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>

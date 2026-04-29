@@ -1,0 +1,52 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+<div class="status-bar success"><span class="status-dot"></span>Plan Activated</div>
+{% endblock %}
+
+{% block content %}
+<h1>{{ plan_category }} plan activated — {{ plan_name }}</h1>
+<p class="subtitle">Level {{ plan_level }} &nbsp;·&nbsp; Transaction: {{ txn_code }}</p>
+
+<p>Hi {{ user.first_name|default:user.username }},</p>
+<p>Your <strong>{{ plan_name }}</strong> plan for <strong>{{ plan_category }}</strong> is now active. You can start accepting tasks immediately.</p>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Plan Details</th><th style="text-align:right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Plan</td>
+      <td class="td-value">{{ plan_category }} — {{ plan_name }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Level</td>
+      <td class="td-value"><span class="badge badge-dark">Level {{ plan_level }}</span></td>
+    </tr>
+    <tr>
+      <td class="td-label">Price Paid</td>
+      <td class="td-value">KES {{ price_kes }} <span style="color:#9ca3af;font-weight:400;">(≈ ${{ price_usd }})</span></td>
+    </tr>
+    <tr>
+      <td class="td-label">Transaction Reference</td>
+      <td class="td-value" style="font-family:monospace;font-size:12px;">{{ txn_code }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Status</td>
+      <td class="td-value"><span class="badge badge-green">Active</span></td>
+    </tr>
+  </tbody>
+</table>
+
+{% if features %}
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:20px 0 8px;">What's included with this plan:</p>
+<ul class="checklist">
+  {% for feature in features %}<li>{{ feature }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+<div class="btn-wrap">
+  <a class="btn" href="{{ site_url }}/dashboard">Start Earning Now</a>
+</div>
+{% endblock %}

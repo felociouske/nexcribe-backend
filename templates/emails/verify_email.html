@@ -1,0 +1,41 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+<div class="status-bar info"><span class="status-dot"></span>Email Verification Required</div>
+{% endblock %}
+
+{% block content %}
+<h1>Verify your email address</h1>
+<p class="subtitle">One step to complete your account setup</p>
+
+<p>Hi {{ username }},</p>
+<p>Thank you for signing up for Nexcribe. Please verify your email address to activate your account and start earning.</p>
+
+<div class="btn-wrap" style="margin: 32px 0;">
+  <a class="btn" href="{{ verification_url }}">Verify My Email Address</a>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Detail</th><th style="text-align:right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Email</td>
+      <td class="td-value">{{ user.email }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Link Expires</td>
+      <td class="td-value">24 hours from now</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note">
+  If the button above does not work, copy and paste the link below into your browser:<br/>
+  <span style="font-family:monospace;font-size:12px;word-break:break-all;color:#0a1628;">{{ verification_url }}</span>
+</div>
+
+<hr class="divider" />
+<p style="font-size:13px;color:#9ca3af;">If you did not create a Nexcribe account, you can safely ignore this email. No action is needed.</p>
+{% endblock %}

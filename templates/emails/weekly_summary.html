@@ -1,0 +1,89 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+<div class="status-bar info"><span class="status-dot"></span>Weekly Summary</div>
+{% endblock %}
+
+{% block content %}
+<h1>Your weekly earnings summary</h1>
+<p class="subtitle">{{ week_start }} — {{ week_end }}</p>
+
+<p>Hi {{ user.first_name|default:user.username }},</p>
+<p>Here is a summary of your activity and earnings on Nexcribe this week.</p>
+
+<!-- Earnings this week -->
+<table class="data-table">
+  <thead>
+    <tr><th>This Week</th><th style="text-align:right">Amount</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Writing Tasks Completed</td>
+      <td class="td-value">{{ writing_tasks|default:"0" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Writing Earnings</td>
+      <td class="td-value td-green">${{ writing_earned|default:"0.00" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Transcription Tasks Completed</td>
+      <td class="td-value">{{ transcription_tasks|default:"0" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Transcription Earnings</td>
+      <td class="td-value td-green">${{ transcription_earned|default:"0.00" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Commissions Earned</td>
+      <td class="td-value td-green">${{ commissions_earned|default:"0.00" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Game &amp; Wheel Rewards</td>
+      <td class="td-value td-green">${{ game_earned|default:"0.00" }}</td>
+    </tr>
+    <tr class="total-row">
+      <td class="td-label">Total Earned This Week</td>
+      <td class="td-value td-green">${{ total_earned|default:"0.00" }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Current wallet balances -->
+<p style="font-size:13px;font-weight:700;color:#0a1628;margin:24px 0 0;">Current Wallet Balances</p>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Wallet</th><th style="text-align:right">Balance</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Account Wallet</td>
+      <td class="td-value">${{ account_balance|default:"0.00" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Yields Wallet</td>
+      <td class="td-value">${{ yields_balance|default:"0.00" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Deposit Wallet</td>
+      <td class="td-value">${{ deposit_balance|default:"0.00" }}</td>
+    </tr>
+    {% if pending_usd and pending_usd != "0.00" %}
+    <tr>
+      <td class="td-label">Pending Withdrawal</td>
+      <td class="td-value" style="color:#f59e0b;">${{ pending_usd }}</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+
+{% if total_earned == "0.00" or not total_earned %}
+<div class="note">
+  You did not complete any tasks this week. There are writing and transcription tasks available right now — log in to start earning.
+</div>
+{% endif %}
+
+<div class="btn-wrap">
+  <a class="btn" href="{{ site_url }}/dashboard">View Full Dashboard</a>
+</div>
+{% endblock %}

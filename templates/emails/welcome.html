@@ -1,0 +1,52 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+<div class="status-bar success"><span class="status-dot"></span>Account Created</div>
+{% endblock %}
+
+{% block content %}
+<h1>Welcome to Nexcribe, {{ username }}</h1>
+<p class="subtitle">Your account is active and ready to use</p>
+
+<p>Hi {{ username }},</p>
+<p>You have successfully created your Nexcribe account. Here is everything you can do from day one:</p>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Feature</th><th style="text-align:right">Details</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Writing Tasks</td>
+      <td class="td-value">Accept and submit articles, essays, reports</td>
+    </tr>
+    <tr>
+      <td class="td-label">Transcription Tasks</td>
+      <td class="td-value">Listen and transcribe real audiobook chapters</td>
+    </tr>
+    <tr>
+      <td class="td-label">Games &amp; Lucky Wheel</td>
+      <td class="td-value">Daily bonus rewards and prize spins</td>
+    </tr>
+    <tr>
+      <td class="td-label">Referral Commissions</td>
+      <td class="td-value">Earn up to 8 levels deep from your network</td>
+    </tr>
+    <tr>
+      <td class="td-label">Minimum Withdrawal</td>
+      <td class="td-value">$2.00 via M-Pesa</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note note-success">
+  Payment is credited to your Account Wallet <strong>instantly</strong> the moment you submit a task — no waiting for admin approval.
+</div>
+
+<div class="btn-wrap">
+  <a class="btn" href="{{ site_url }}/dashboard">Go to My Dashboard</a>
+</div>
+
+<hr class="divider" />
+<p style="font-size:13px;color:#9ca3af;">If you did not create this account, please ignore this email or contact support immediately at <a href="mailto:support@nexcribe.com" style="color:#14b87c;">support@nexcribe.com</a>.</p>
+{% endblock %}

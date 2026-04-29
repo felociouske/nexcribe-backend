@@ -1,0 +1,51 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+<div class="status-bar success"><span class="status-dot"></span>Game Reward Credited</div>
+{% endblock %}
+
+{% block content %}
+<h1>You won a game reward</h1>
+<p class="subtitle">{{ game_name }}</p>
+
+<p>Hi {{ user.first_name|default:user.username }},</p>
+<p>Congratulations — you earned a reward from <strong>{{ game_name }}</strong>. Your winnings have been credited to your Account Wallet.</p>
+
+<div class="summary">
+  <div class="amount-label">Reward Amount</div>
+  <div class="amount">${{ amount_usd }}</div>
+  <div class="amount-sub">KES {{ amount_kes }} &nbsp;·&nbsp; Account Wallet</div>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Detail</th><th style="text-align:right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Game</td>
+      <td class="td-value">{{ game_name }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Result</td>
+      <td class="td-value">{{ result|default:"Win" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Amount (USD)</td>
+      <td class="td-value td-green">${{ amount_usd }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Amount (KES)</td>
+      <td class="td-value">KES {{ amount_kes }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Credited To</td>
+      <td class="td-value">Account Wallet</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="btn-wrap">
+  <a class="btn" href="{{ site_url }}/dashboard/games">Play Again</a>
+</div>
+{% endblock %}

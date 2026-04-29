@@ -1,0 +1,79 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+{% if status == 'APPROVED' %}
+<div class="status-bar success"><span class="status-dot"></span>Deposit Approved</div>
+{% elif status == 'REJECTED' %}
+<div class="status-bar danger"><span class="status-dot"></span>Deposit Rejected</div>
+{% else %}
+<div class="status-bar info"><span class="status-dot"></span>Deposit Received</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>
+  {% if status == 'APPROVED' %}Deposit confirmed and credited
+  {% elif status == 'REJECTED' %}Deposit could not be processed
+  {% else %}Deposit request received{% endif %}
+</h1>
+<p class="subtitle">M-Pesa Code: {{ mpesa_code|default:"—" }}</p>
+
+<p>Hi {{ user.first_name|default:user.username }},</p>
+<p>
+  {% if status == 'APPROVED' %}
+    Your M-Pesa deposit has been verified and credited to your Deposit Wallet. You can now use these funds to purchase a plan.
+  {% elif status == 'REJECTED' %}
+    We were unable to verify your deposit. Please contact support with your M-Pesa transaction code if you believe this is an error.
+  {% else %}
+    We have received your deposit request and are verifying it. This typically takes a few minutes.
+  {% endif %}
+</p>
+
+{% if status == 'APPROVED' %}
+<div class="summary">
+  <div class="amount-label">Amount Credited</div>
+  <div class="amount">${{ amount_usd }}</div>
+  <div class="amount-sub">KES {{ amount_kes }} &nbsp;·&nbsp; Deposit Wallet</div>
+</div>
+{% endif %}
+
+<table class="data-table">
+  <thead>
+    <tr><th>Detail</th><th style="text-align:right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Amount (KES)</td>
+      <td class="td-value">KES {{ amount_kes }}</td>
+    </tr>
+    {% if amount_usd %}
+    <tr>
+      <td class="td-label">Amount (USD)</td>
+      <td class="td-value">${{ amount_usd }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td class="td-label">M-Pesa Code</td>
+      <td class="td-value" style="font-family:monospace;">{{ mpesa_code|default:"—" }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Status</td>
+      <td class="td-value">
+        {% if status == 'APPROVED' %}<span class="badge badge-green">Approved</span>
+        {% elif status == 'REJECTED' %}<span class="badge badge-red">Rejected</span>
+        {% else %}<span class="badge badge-amber">Pending</span>{% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% if status == 'APPROVED' %}
+<div class="btn-wrap">
+  <a class="btn" href="{{ site_url }}/dashboard/plans">Browse Plans</a>
+</div>
+{% else %}
+<div class="btn-wrap">
+  <a class="btn" href="{{ site_url }}/dashboard/wallet">View Wallet</a>
+</div>
+{% endif %}
+{% endblock %}

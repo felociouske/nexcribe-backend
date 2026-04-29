@@ -1,0 +1,86 @@
+{% extends "emails/base_email.html" %}
+
+{% block status_bar %}
+{% if status == 'APPROVED' %}
+<div class="status-bar success"><span class="status-dot"></span>Payment Credited</div>
+{% else %}
+<div class="status-bar danger"><span class="status-dot"></span>Submission Rejected</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>
+  {% if status == 'APPROVED' %}Payment received for your {{ task_type|lower }} task
+  {% else %}{{ task_type }} task could not be approved{% endif %}
+</h1>
+<p class="subtitle">{{ task_title }}</p>
+
+<p>Hi {{ user.first_name|default:user.username }},</p>
+<p>
+  {% if status == 'APPROVED' %}
+    Your {{ task_type|lower }} submission has been processed and payment has been credited to your Account Wallet.
+  {% else %}
+    Your {{ task_type|lower }} submission was reviewed but could not be approved at this time.
+  {% endif %}
+</p>
+
+{% if status == 'APPROVED' and amount_usd %}
+<div class="summary">
+  <div class="amount-label">Amount Credited</div>
+  <div class="amount">${{ amount_usd }}</div>
+  <div class="amount-sub">Account Wallet &nbsp;·&nbsp; {{ task_type }} Task</div>
+</div>
+{% endif %}
+
+<table class="data-table">
+  <thead>
+    <tr><th>Detail</th><th style="text-align:right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="td-label">Task</td>
+      <td class="td-value" style="max-width:220px;">{{ task_title }}</td>
+    </tr>
+    <tr>
+      <td class="td-label">Type</td>
+      <td class="td-value">{{ task_type }}</td>
+    </tr>
+    {% if amount_usd %}
+    <tr>
+      <td class="td-label">Payment</td>
+      <td class="td-value td-green">${{ amount_usd }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td class="td-label">Status</td>
+      <td class="td-value">
+        {% if status == 'APPROVED' %}<span class="badge badge-green">Paid</span>
+        {% else %}<span class="badge badge-red">Rejected</span>{% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% if feedback %}
+<table class="data-table">
+  <tr>
+    <td class="td-label">Feedback</td>
+    <td class="td-value">{{ feedback }}</td>
+  </tr>
+</table>
+{% endif %}
+
+{% if status == 'APPROVED' %}
+<div class="note note-success">
+  Your payment has been credited to your Account Wallet. You can withdraw once your balance reaches the minimum withdrawal threshold.
+</div>
+{% endif %}
+
+<div class="btn-wrap">
+  {% if status == 'APPROVED' %}
+  <a class="btn" href="{{ site_url }}/dashboard/wallet">View Account Wallet</a>
+  {% else %}
+  <a class="btn" href="{{ site_url }}/dashboard/{{ task_type|lower }}">Browse More Tasks</a>
+  {% endif %}
+</div>
+{% endblock %}

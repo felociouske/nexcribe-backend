@@ -1,0 +1,68 @@
+# ── Python ──
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# ── Virtual Environment ──
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# ── Environment Variables ──
+.env
+.env.*
+!.env.example
+
+# ── Django ──
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static/
+
+# ── Migrations (keep these in version control) ──
+# Uncomment below only if you want to ignore migrations
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# ── Celery ──
+celerybeat-schedule
+celerybeat.pid
+
+# ── Testing ──
+.coverage
+htmlcov/
+.pytest_cache/
+coverage.xml
+*.cover
+
+# ── Distribution / Build ──
+dist/
+build/
+*.egg-info/
+*.egg
+
+# ── IDE / Editor ──
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── OS ──
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
