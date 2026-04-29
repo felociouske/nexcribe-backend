@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum
 from .models import AffiliateNode, Commission
+from apps.affiliates.models import MAX_COMMISSION_LEVELS
 
 
 class CommissionSerializer(serializers.ModelSerializer):
@@ -155,7 +156,7 @@ class EarningsSummaryView(APIView):
             total_usd=Sum('amount_usd'), total_kes=Sum('amount_kes')
         )
         by_level = {}
-        for lvl in range(1, 9):
+        for lvl in range(1, MAX_COMMISSION_LEVELS + 1):
             agg = commissions.filter(level_depth=lvl).aggregate(
                 total=Sum('amount_usd')
             )
