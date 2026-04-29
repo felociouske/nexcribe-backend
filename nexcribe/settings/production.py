@@ -20,7 +20,7 @@ CORS_ALLOWED_ORIGINS = [origin.strip() for origin in get_list("CORS_ALLOWED_ORIG
 CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://nexcribe-frontend.vercel.app",
-    "http://localhost:5173"
-]
+CSRF_TRUSTED_ORIGINS = get_list(
+    "CSRF_TRUSTED_ORIGINS",
+    default="https://nexcribe-frontend.vercel.app"
+)
