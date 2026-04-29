@@ -2,9 +2,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import redirect  # 👈 ADD THIS
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView as SpectacularSwaggerUIView
 
+
+def root_redirect(request):
+    return redirect('/admin/') 
+
 urlpatterns = [
+    path('', root_redirect), 
     path('admin/', admin.site.urls),
     path('api/v1/auth/', include('apps.users.urls.auth')),
     path('api/v1/users/', include('apps.users.urls.users')),
@@ -16,10 +22,12 @@ urlpatterns = [
     path('api/v1/transcription/', include('apps.transcription.urls')),
     path('api/v1/payments/', include('apps.payments.urls')),
     path('api/v1/notifications/', include('apps.notifications.urls')),
+
     # API Docs
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerUIView.as_view(url_name='schema'), name='swagger-ui'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 # Custom admin branding
 admin.site.site_header = 'Nexcribe Admin'
