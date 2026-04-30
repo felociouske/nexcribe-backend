@@ -25,7 +25,9 @@ def send_welcome_email(self, user_id):
         )
     except Exception as exc:
         logger.error(f'send_welcome_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -45,7 +47,9 @@ def send_verification_email(self, user_id, token):
         )
     except Exception as exc:
         logger.error(f'send_verification_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -65,7 +69,9 @@ def send_password_reset_email(self, user_id, token):
         )
     except Exception as exc:
         logger.error(f'send_password_reset_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -101,7 +107,9 @@ def send_commission_email(self, user_id, amount_usd, from_username, plan_name, l
         )
     except Exception as exc:
         logger.error(f'send_commission_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -138,7 +146,9 @@ def send_plan_purchase_email(self, user_id, plan_id, txn_code):
         )
     except Exception as exc:
         logger.error(f'send_plan_purchase_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -183,7 +193,9 @@ def send_withdrawal_update_email(self, user_id, amount_usd, wallet_type, status,
         )
     except Exception as exc:
         logger.error(f'send_withdrawal_update_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -227,7 +239,9 @@ def send_task_update_email(self, user_id, task_type, task_title, status, feedbac
         )
     except Exception as exc:
         logger.error(f'send_task_update_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -253,7 +267,9 @@ def send_game_reward_email(self, user_id, game_name, amount_usd, txn_code):
         )
     except Exception as exc:
         logger.error(f'send_game_reward_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task(bind=True, max_retries=3)
@@ -279,7 +295,9 @@ def send_spin_win_email(self, user_id, prize_label, amount_usd, txn_code):
         )
     except Exception as exc:
         logger.error(f'send_spin_win_email failed for {user_id}: {exc}')
-        raise self.retry(exc=exc, countdown=30)
+        if getattr(self, 'request', None) and getattr(self.request, 'id', None):
+            raise self.retry(exc=exc, countdown=30)
+        raise
 
 
 @shared_task

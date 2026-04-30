@@ -110,21 +110,21 @@ class PurchasePlanView(APIView):
             logger.error(f'Plan purchase failed: {e}')
             return Response({'error': 'Purchase failed. Please try again.'}, status=500)
 
-        # Affiliate commissions (outside transaction — safe for async)
+        # Affiliate commissions — called directly (no .delay) so it works without Celery
         try:
             from apps.affiliates.tasks import process_affiliate_commissions
-            process_affiliate_commissions.delay(
+            process_affiliate_commissions(
                 purchaser_id=str(user.id),
                 plan_id=str(plan.id),
                 txn_code=txn_code,
             )
         except Exception as e:
-            logger.warning(f'Affiliate commission task failed (non-critical): {e}')
+            logger.warning(f'Affiliate commission failed (non-critical): {e}')
 
-        # Purchase confirmation email — was missing entirely before this fix
+        # Purchase confirmation email — runs directly, no Celery needed
         try:
             from apps.notifications.tasks import send_plan_purchase_email
-            send_plan_purchase_email.delay(str(user.id), str(plan.id), txn_code)
+            send_plan_purchase_email(str(user.id), str(plan.id), txn_code)
         except Exception as e:
             logger.warning(f'Plan purchase email failed (non-critical): {e}')
 
