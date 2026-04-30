@@ -168,7 +168,7 @@ DEFAULT_FROM_EMAIL = config(
     default='Nexcribe <noreply@nexcribe.com>'
 )
 
-EMAIL_TIMEOUT = 20
+EMAIL_TIMEOUT = 5  # was 20 — a 20s timeout blocks the web thread on every email failure
 
 # ── App-specific ──
 FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:5173')
@@ -181,5 +181,3 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API for the Nexcribe earning platform',
     'VERSION': '1.0.0',
 }
-
-

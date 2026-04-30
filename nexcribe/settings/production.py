@@ -15,8 +15,12 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
-# Use real SMTP in production
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND is intentionally NOT hardcoded here.
+# Set it via the EMAIL_BACKEND env variable in Railway:
+#   django.core.mail.backends.smtp.EmailBackend      ← real SMTP
+#   django.core.mail.backends.console.EmailBackend   ← logs to stdout (safe fallback)
+# base.py reads it from env with console as default, so if the var is missing
+# emails log to stdout rather than hanging on a broken SMTP connection.
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -28,3 +32,29 @@ CSRF_TRUSTED_ORIGINS = get_list(
     "CSRF_TRUSTED_ORIGINS",
     default="https://nexcribe-frontend.vercel.app"
 )
+
+# Logging — structured JSON-style for Railway log viewer
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'railway': {
+            'format': '[%(asctime)s] %(levelname)s %(name)s: %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'railway',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'apps': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+        'django.request': {'handlers': ['console'], 'level': 'ERROR', 'propagate': False},
+    },
+}
