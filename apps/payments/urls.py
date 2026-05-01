@@ -4,6 +4,7 @@ from .views import (
     AdminDepositListView, AdminProcessDepositView,
     RequestWithdrawalView, MyWithdrawalsView,
     AdminWithdrawalListView, AdminProcessWithdrawalView,
+    MpesaPaymentDetailsView,
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path('withdrawals/', MyWithdrawalsView.as_view(), name='my-withdrawals'),
     path('admin/withdrawals/', AdminWithdrawalListView.as_view(), name='admin-withdrawals'),
     path('admin/withdrawals/<uuid:pk>/process/', AdminProcessWithdrawalView.as_view(), name='admin-process-withdrawal'),
+    path('mpesa-details/', MpesaPaymentDetailsView.as_view(), name='mpesa-details'),
 ]

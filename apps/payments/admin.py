@@ -4,7 +4,26 @@ from decimal import Decimal
 from django.conf import settings
 from django.db import transaction as db_transaction
 
-from .models import WithdrawalRequest, DepositRequest
+from .models import WithdrawalRequest, DepositRequest, MpesaPaymentDetails
+
+
+@admin.register(MpesaPaymentDetails)
+class MpesaPaymentDetailsAdmin(admin.ModelAdmin):
+    list_display = ['phone_number', 'account_name', 'is_active', 'created_at', 'updated_at']
+    list_filter = ['is_active']
+    search_fields = ['phone_number', 'account_name']
+    ordering = ['-is_active', '-created_at']
+    readonly_fields = ['created_at', 'updated_at']
+
+    fieldsets = (
+        (None, {
+            'fields': ('phone_number', 'account_name', 'is_active')
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
 
 
 @admin.register(DepositRequest)
@@ -75,6 +94,7 @@ class DepositRequestAdmin(admin.ModelAdmin):
                     'Deposit Approved',
                     f'Your deposit of KES {amount_kes:,.0f} (${amount_usd}) has been credited to your Deposit Wallet.',
                     '/dashboard/wallet',
+                    admin_remark=d.admin_note,
                 )
             except Exception:
                 pass
@@ -112,6 +132,7 @@ class DepositRequestAdmin(admin.ModelAdmin):
                     f'Your deposit of KES {d.amount_kes} (M-Pesa: {d.mpesa_code}) was rejected. '
                     f'Please contact support if you believe this is an error.',
                     '/dashboard/wallet',
+                    admin_remark=d.admin_note,
                 )
             except Exception:
                 pass
@@ -228,6 +249,7 @@ class WithdrawalRequestAdmin(admin.ModelAdmin):
                     f'Your withdrawal of ${w.amount_usd} (KES {w.amount_kes:,.0f}) from your '
                     f'{wallet_label} has been approved and sent to {w.phone_number}.',
                     '/dashboard/wallet',
+                    admin_remark=w.admin_note,
                 )
             except Exception:
                 pass
@@ -278,6 +300,7 @@ class WithdrawalRequestAdmin(admin.ModelAdmin):
                     f'Your withdrawal of ${w.amount_usd} (KES {w.amount_kes:,.0f}) from your '
                     f'{wallet_label} has been rejected. The funds have been returned to your balance.',
                     '/dashboard/wallet',
+                    admin_remark=w.admin_note,
                 )
             except Exception:
                 pass

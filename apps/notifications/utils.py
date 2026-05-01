@@ -55,7 +55,7 @@ def send_html_email(user, email_type, subject, template_name, context):
         return False
 
 
-def create_notification(user, notification_type, title, message, link='', metadata=None):
+def create_notification(user, notification_type, title, message, link='', metadata=None, admin_remark=''):
     """Create an in-app notification for a user."""
     from apps.notifications.models import Notification
     return Notification.objects.create(
@@ -65,4 +65,5 @@ def create_notification(user, notification_type, title, message, link='', metada
         message=message,
         link=link,
         metadata=metadata or {},
+        admin_remark=admin_remark,
     )

@@ -2,6 +2,27 @@ from django.db import models
 from apps.core.models import TimeStampedModel
 
 
+class MpesaPaymentDetails(TimeStampedModel):
+    """M-Pesa payment details for deposits."""
+    phone_number = models.CharField(max_length=20, unique=True, help_text="M-Pesa phone number (e.g., 0750518501)")
+    account_name = models.CharField(max_length=100, help_text="Account name (e.g., RAHAB)")
+    is_active = models.BooleanField(default=True, help_text="Whether this payment method is currently active")
+
+    class Meta:
+        db_table = 'mpesa_payment_details'
+        verbose_name = 'M-Pesa Payment Detail'
+        verbose_name_plural = 'M-Pesa Payment Details'
+        ordering = ['-is_active', '-created_at']
+
+    def __str__(self):
+        return f"{self.phone_number} ({self.account_name}) {'[ACTIVE]' if self.is_active else '[INACTIVE]'}"
+
+    @classmethod
+    def get_active_details(cls):
+        """Get the first active payment details."""
+        return cls.objects.filter(is_active=True).first()
+
+
 class DepositRequest(TimeStampedModel):
     """Manual M-Pesa deposit submitted by user, approved by admin."""
     STATUS_PENDING = 'PENDING'

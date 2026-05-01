@@ -30,7 +30,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = get_list(
     "CSRF_TRUSTED_ORIGINS",
-    default="https://nexcribe-frontend.vercel.app"
+    default="http://nexcribe.com"
 )
 
 # Logging — structured JSON-style for Railway log viewer

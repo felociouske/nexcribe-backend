@@ -8,15 +8,18 @@ from django.db import transaction
 from decimal import Decimal
 import logging
 
-from .models import DepositRequest, WithdrawalRequest
+from .models import DepositRequest, WithdrawalRequest, MpesaPaymentDetails
 from apps.users.models import Transaction as TxnModel
 from apps.core.models import generate_transaction_code
 from apps.notifications.utils import create_notification
 
 logger = logging.getLogger(__name__)
 
+class MpesaPaymentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MpesaPaymentDetails
+        fields = ['phone_number', 'account_name']
 
-# ── Serializers ──
 
 class DepositRequestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -472,3 +475,12 @@ class AdminProcessWithdrawalView(APIView):
             'message': f'Withdrawal {action}d.',
             'status': withdrawal.status,
         })
+
+
+class MpesaPaymentDetailsView(generics.RetrieveAPIView):
+    serializer_class = MpesaPaymentDetailsSerializer
+    permission_classes = []
+
+    def get_object(self):
+        # Return the active M-Pesa payment details
+        return MpesaPaymentDetails.objects.filter(is_active=True).first()
