@@ -10,7 +10,6 @@ def generate_transaction_code():
     suffix = ''.join(random.choices(chars, k=8))
     return f'NX-TXN-{suffix}'
 
-
 def generate_referral_code():
     """Generate unique referral code like NX-REF-XXXXXX."""
     chars = string.ascii_uppercase + string.digits
