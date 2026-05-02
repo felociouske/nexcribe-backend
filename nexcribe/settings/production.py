@@ -2,6 +2,9 @@ from .base import *
 
 DEBUG = False
 
+# ── Email (Brevo via Anymail) ──
+EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 SECURE_SSL_REDIRECT = False
@@ -14,13 +17,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
-
-# EMAIL_BACKEND is intentionally NOT hardcoded here.
-# Set it via the EMAIL_BACKEND env variable in Railway:
-#   django.core.mail.backends.smtp.EmailBackend      ← real SMTP
-#   django.core.mail.backends.console.EmailBackend   ← logs to stdout (safe fallback)
-# base.py reads it from env with console as default, so if the var is missing
-# emails log to stdout rather than hanging on a broken SMTP connection.
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

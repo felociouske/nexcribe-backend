@@ -6,7 +6,6 @@ from .models import User, Profile, AccountWallet, YieldsWallet, Transaction, Dep
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True)
-    # referral_code is only passed via URL (/ref/CODE), not shown in form
     referral_code = serializers.CharField(
         write_only=True, required=False, allow_blank=True, allow_null=True, default=''
     )
