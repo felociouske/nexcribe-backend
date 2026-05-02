@@ -9,7 +9,7 @@ from apps.core.models import TimeStampedModel, generate_referral_code
 def generate_virtual_card_number():
     """Generate a 16-digit virtual card number in groups of 4."""
     groups = [str(random.randint(1000, 9999)) for _ in range(4)]
-    groups[0] = str(random.randint(4000, 4999))  # Visa-style prefix
+    groups[0] = str(random.randint(4000, 4999))  
     return ' '.join(groups)
 
 

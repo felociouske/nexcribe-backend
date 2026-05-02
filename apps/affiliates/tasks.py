@@ -120,10 +120,10 @@ def process_affiliate_commissions(self, purchaser_id, plan_id, txn_code):
                 except Exception as e:
                     logger.warning(f'Commission notification failed at L{depth_index}: {e}')
 
-                # Email — called directly (no .delay) so it runs without Celery
+                # Email — use .delay() to queue via Celery
                 try:
                     from apps.notifications.tasks import send_commission_email
-                    send_commission_email(
+                    send_commission_email.delay(
                         str(ancestor_node.user.id),
                         str(amount_usd),
                         purchaser.username,
@@ -148,7 +148,6 @@ def process_affiliate_commissions(self, purchaser_id, plan_id, txn_code):
 
     except Exception as exc:
         logger.error(f'process_affiliate_commissions failed: {exc}')
-        # Only retry via Celery if this was called as an async task
         if getattr(self, 'request', None) and getattr(self.request, 'id', None):
             raise self.retry(exc=exc, countdown=60)
         raise

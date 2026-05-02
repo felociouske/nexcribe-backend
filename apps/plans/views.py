@@ -124,7 +124,7 @@ class PurchasePlanView(APIView):
         # Purchase confirmation email — runs directly, no Celery needed
         try:
             from apps.notifications.tasks import send_plan_purchase_email
-            send_plan_purchase_email(str(user.id), str(plan.id), txn_code)
+            send_plan_purchase_email.delay(str(user.id), str(plan.id), txn_code)
         except Exception as e:
             logger.warning(f'Plan purchase email failed (non-critical): {e}')
 
