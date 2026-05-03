@@ -62,6 +62,17 @@ JOBS = [
      "instructions": "Include an introduction, two body paragraphs (pros and cons), and a conclusion.",
      "difficulty": "INTERMEDIATE", "level": 2, "budget_kes": 2600, "words": 500, "category": "Health"},
 
+    # ── Level 2 · Maths (Simple) ───────────────────────────────────────────
+    {"title": "Maths assignment: Introduction to sets and Venn diagrams",
+     "description": "Complete a short university-style maths assignment explaining the concept of sets, subsets, unions, intersections, and complement using Venn diagrams. Include 3 worked examples.",
+     "instructions": "Use clear notation (A ∩ B, A ∪ B, A'). Provide step-by-step solutions for each example. 400-500 words of explanation plus diagrams described in text.",
+     "difficulty": "BASIC", "level": 2, "budget_kes": 2800, "words": 450, "category": "Mathematics"},
+
+    {"title": "Maths project: Real-world applications of linear equations",
+     "description": "Write a 500-word project exploring how linear equations are used in everyday life — budgeting, speed/distance, and simple business pricing models. Include 2 solved word problems.",
+     "instructions": "Show full working for each problem. Use simple language suitable for Form 3 level.",
+     "difficulty": "BASIC", "level": 2, "budget_kes": 2600, "words": 500, "category": "Mathematics"},
+
     # ── Level 3-4 · Intermediate ────────────────────────────────────────────
     {"title": "University project: Literature review on climate change adaptation in East Africa",
      "description": "Write a 700-word literature review on climate change adaptation strategies in East Africa. Reference at least 5 key themes from existing research (no actual citations needed — summarise themes).",
@@ -88,6 +99,27 @@ JOBS = [
      "instructions": "Include thesis statement. Use logical arguments. No personal anecdotes.",
      "difficulty": "INTERMEDIATE", "level": 3, "budget_kes": 4250, "words": 700, "category": "Academic"},
 
+    # ── Level 3-4 · Maths (Intermediate) ──────────────────────────────────
+    {"title": "Maths university assignment: Differential calculus — differentiation rules",
+     "description": "Write a university-level assignment covering the power rule, product rule, quotient rule, and chain rule. Include 4 fully worked example problems — one per rule.",
+     "instructions": "Show all steps clearly. Use proper mathematical notation. Each example should increase in complexity. 600-700 words of working and explanation.",
+     "difficulty": "INTERMEDIATE", "level": 3, "budget_kes": 4500, "words": 650, "category": "Mathematics"},
+
+    {"title": "Maths project: Matrices and systems of linear equations",
+     "description": "Write a 600-word university project demonstrating how matrices are used to solve systems of linear equations using Gaussian elimination and Cramer's Rule. Provide 2 fully worked 3×3 systems.",
+     "instructions": "Show row operations clearly. Verify solutions by substitution. Include brief real-world application (e.g. traffic flow or economics).",
+     "difficulty": "INTERMEDIATE", "level": 3, "budget_kes": 4200, "words": 600, "category": "Mathematics"},
+
+    {"title": "Maths assignment: Probability theory and Bayes' theorem",
+     "description": "Complete a 500-word university assignment on probability: conditional probability, independence, and Bayes' theorem. Solve 3 applied problems involving medical testing or quality control scenarios.",
+     "instructions": "Define all terms before use. Express all probabilities as fractions and decimals. Show full working.",
+     "difficulty": "INTERMEDIATE", "level": 4, "budget_kes": 5000, "words": 550, "category": "Mathematics"},
+
+    {"title": "Maths project: Introduction to complex numbers",
+     "description": "Write a 600-word project introducing complex numbers for a university audience. Cover the imaginary unit, arithmetic of complex numbers, the Argand diagram, modulus, and De Moivre's theorem with one proof.",
+     "instructions": "Include at least 3 fully worked examples. Use correct notation throughout (e.g. z = a + bi).",
+     "difficulty": "INTERMEDIATE", "level": 4, "budget_kes": 5200, "words": 600, "category": "Mathematics"},
+
     # ── Level 5-6 · Advanced ────────────────────────────────────────────────
     {"title": "Research report: Impact of COVID-19 on informal sector workers in Nairobi",
      "description": "Write a 1000-word research-style report on how the COVID-19 pandemic affected informal sector (jua kali) workers in Nairobi. Cover income loss, coping strategies, and recovery.",
@@ -108,6 +140,22 @@ JOBS = [
      "description": "Write a clear, user-friendly 800-word guide explaining how to use a fictional mobile banking app called 'SwiftPay'. Cover account setup, sending money, paying bills, and security tips.",
      "instructions": "Use numbered steps. Include a troubleshooting section at the end.",
      "difficulty": "ADVANCED", "level": 5, "budget_kes": 7000, "words": 800, "category": "Technology"},
+
+    # ── Level 5 · Maths (Advanced) ─────────────────────────────────────────
+    {"title": "Maths thesis chapter: Real analysis — limits and continuity",
+     "description": "Write an 800-word university-level chapter section on the epsilon-delta definition of a limit, continuity, and the intermediate value theorem. Include 2 rigorous proofs and 2 worked examples.",
+     "instructions": "Use formal proof structure (Theorem / Proof / QED). Assume the reader has completed first-year calculus. Notation must be precise.",
+     "difficulty": "ADVANCED", "level": 5, "budget_kes": 8000, "words": 850, "category": "Mathematics"},
+
+    {"title": "Maths project: Numerical methods — Newton-Raphson and bisection",
+     "description": "Write a 900-word project comparing the Newton-Raphson and bisection methods for finding roots of equations. Include derivations, convergence analysis, and fully worked iterations for f(x) = x³ − 2x − 5.",
+     "instructions": "Show at least 4 iterations for each method. Include a convergence comparison table. Discuss advantages and limitations of each method.",
+     "difficulty": "ADVANCED", "level": 5, "budget_kes": 7500, "words": 900, "category": "Mathematics"},
+
+    {"title": "Maths assignment: Linear algebra — eigenvalues and eigenvectors",
+     "description": "Write a 700-word university assignment on eigenvalues and eigenvectors. Derive the characteristic equation, find eigenvalues and eigenvectors for two 3×3 matrices, and explain the geometric interpretation.",
+     "instructions": "Show all determinant calculations. Verify results. Include one application (e.g. diagonalisation or Markov chains).",
+     "difficulty": "ADVANCED", "level": 5, "budget_kes": 7000, "words": 700, "category": "Mathematics"},
 
     # ── Level 6-8 · Advanced/Expert ─────────────────────────────────────────
     {"title": "University dissertation introduction chapter (1500 words)",
@@ -134,6 +182,32 @@ JOBS = [
      "description": "Write a 1500-word feasibility study for a private investor considering building a cold storage facility in Kisumu to serve local farmers.",
      "instructions": "Cover market analysis, technical requirements, financial viability overview, risks, and conclusion.",
      "difficulty": "ADVANCED", "level": 7, "budget_kes": 17500, "words": 1500, "category": "Business"},
+
+    # ── Level 6-8 · Maths (Expert) ─────────────────────────────────────────
+    {"title": "Maths thesis chapter: Fourier series and convergence (1000 words)",
+     "description": "Write a 1000-word thesis-level chapter on Fourier series. Derive the Fourier coefficients, prove Dirichlet's conditions for convergence, and apply the series to solve a heat equation boundary value problem.",
+     "instructions": "Use LaTeX-style notation written out in text (e.g. \\sum, \\int). Rigorous proof required for convergence. Show full derivation of the heat equation solution.",
+     "difficulty": "ADVANCED", "level": 6, "budget_kes": 13000, "words": 1050, "category": "Mathematics"},
+
+    {"title": "Maths thesis chapter: Group theory — subgroups, cosets, and Lagrange's theorem",
+     "description": "Write a 1000-word chapter section on abstract algebra covering group axioms, subgroup criteria, coset decomposition, and a complete proof of Lagrange's theorem. Include examples using Z_n and S_3.",
+     "instructions": "All theorems must be formally stated and proved. Use standard algebraic notation. Include at least 2 concrete examples illustrating each major concept.",
+     "difficulty": "ADVANCED", "level": 6, "budget_kes": 13500, "words": 1000, "category": "Mathematics"},
+
+    {"title": "Master's maths project: Stochastic processes and Markov chains",
+     "description": "Write a 1200-word master's-level project on discrete-time Markov chains. Cover the Chapman-Kolmogorov equations, classification of states (transient/recurrent), steady-state distributions, and a fully worked queueing theory example.",
+     "instructions": "Include a transition matrix, derive the steady-state vector, and interpret results. Use rigorous but accessible language. Show all matrix computations.",
+     "difficulty": "ADVANCED", "level": 7, "budget_kes": 18000, "words": 1200, "category": "Mathematics"},
+
+    {"title": "Maths dissertation chapter: Topology — metric spaces and compactness (1500 words)",
+     "description": "Write a 1500-word dissertation-level chapter on metric spaces. Cover open/closed sets, convergence, completeness, compactness (Heine-Borel theorem), and connectedness. Include full proofs for at least two major theorems.",
+     "instructions": "Write at postgraduate level. All definitions must be formal. Proofs should use standard topological arguments. Include one non-trivial example (e.g. Cantor set or function spaces).",
+     "difficulty": "ADVANCED", "level": 7, "budget_kes": 22000, "words": 1500, "category": "Mathematics"},
+
+    {"title": "PhD-level maths writing: Partial differential equations — existence and uniqueness",
+     "description": "Write a 2000-word chapter-level discussion on existence and uniqueness of solutions to second-order linear PDEs. Cover classification (elliptic, parabolic, hyperbolic), the Cauchy-Kovalevskaya theorem, and energy methods for uniqueness.",
+     "instructions": "Write at doctoral level. Use precise mathematical language and formal theorem-proof structure. Reference the method of characteristics and Sobolev spaces conceptually. Include two fully worked classification examples.",
+     "difficulty": "ADVANCED", "level": 8, "budget_kes": 32000, "words": 2000, "category": "Mathematics"},
 ]
 
 

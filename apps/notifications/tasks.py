@@ -43,7 +43,7 @@ def send_verification_email(self, user_id, token):
             email_type='EMAIL_VERIFICATION',
             subject='Verify Your Nexcribe Email Address',
             template_name='verify_email.html',
-            context={'verify_url': verify_url},
+            context={'verify_url': verify_url, 'username': user.first_name or user.username},
         )
     except Exception as exc:
         logger.error(f'send_verification_email failed for {user_id}: {exc}')
