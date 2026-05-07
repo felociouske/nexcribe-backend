@@ -148,9 +148,17 @@ class SpinWheelView(APIView):
 
             if reward_usd >= Decimal('0.50'):
                 try:
-                    from apps.notifications.tasks import send_spin_win_email
-                    send_spin_win_email.delay(
-                        str(user.id), winning_slice.label, str(reward_usd), txn_code
+                    from apps.notifications.utils import send_html_email
+                    send_html_email(
+                        user=user,
+                        email_type='SPIN_WIN',
+                        subject=f'Lucky Wheel Win — {winning_slice.label}!',
+                        template_name='spin_win.html',
+                        context={
+                            'prize_label': winning_slice.label,
+                            'amount_usd': str(reward_usd),
+                            'txn_code': txn_code,
+                        },
                     )
                 except Exception as e:
                     logger.warning(f'Spin win email failed: {e}')

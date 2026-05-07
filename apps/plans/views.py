@@ -121,10 +121,24 @@ class PurchasePlanView(APIView):
         except Exception as e:
             logger.warning(f'Affiliate commission failed (non-critical): {e}')
 
-        # Purchase confirmation email — runs directly, no Celery needed
+        # Purchase confirmation email — sent directly (no Celery)
         try:
-            from apps.notifications.tasks import send_plan_purchase_email
-            send_plan_purchase_email.delay(str(user.id), str(plan.id), txn_code)
+            from apps.notifications.utils import send_html_email
+            send_html_email(
+                user=user,
+                email_type='PLAN_PURCHASE',
+                subject=f'Plan Activated — {plan.get_category_display()} {plan.name}',
+                template_name='plan_purchase.html',
+                context={
+                    'plan_name': plan.name,
+                    'plan_category': plan.get_category_display(),
+                    'plan_level': plan.level,
+                    'price_kes': plan.price_kes,
+                    'price_usd': plan.price_usd,
+                    'txn_code': txn_code,
+                    'features': plan.features_list,
+                },
+            )
         except Exception as e:
             logger.warning(f'Plan purchase email failed (non-critical): {e}')
 
