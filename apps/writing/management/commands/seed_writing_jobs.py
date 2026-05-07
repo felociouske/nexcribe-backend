@@ -31,7 +31,7 @@ JOBS = [
      "instructions": "Use numbered list format. Each tip should have 2-3 sentences of explanation.",
      "difficulty": "BASIC", "level": 1, "budget_kes": 1400, "words": 350, "category": "Finance"},
 
-    {"title": "Restaurant review template — local Kenyan cuisine",
+    {"title": "Restaurant review template - local Kenyan cuisine",
      "description": "Write a sample restaurant review of a fictional Kenyan restaurant called 'Mama Oliech's'. Cover food, ambience, service, and value.",
      "instructions": "Write as if you visited personally. 250-300 words. Positive tone.",
      "difficulty": "BASIC", "level": 1, "budget_kes": 1300, "words": 280, "category": "Travel & Food"},
@@ -100,7 +100,7 @@ JOBS = [
      "difficulty": "INTERMEDIATE", "level": 3, "budget_kes": 4250, "words": 700, "category": "Academic"},
 
     # ── Level 3-4 · Maths (Intermediate) ──────────────────────────────────
-    {"title": "Maths university assignment: Differential calculus — differentiation rules",
+    {"title": "Maths university assignment: Differential calculus - differentiation rules",
      "description": "Write a university-level assignment covering the power rule, product rule, quotient rule, and chain rule. Include 4 fully worked example problems — one per rule.",
      "instructions": "Show all steps clearly. Use proper mathematical notation. Each example should increase in complexity. 600-700 words of working and explanation.",
      "difficulty": "INTERMEDIATE", "level": 3, "budget_kes": 4500, "words": 650, "category": "Mathematics"},
@@ -142,17 +142,17 @@ JOBS = [
      "difficulty": "ADVANCED", "level": 5, "budget_kes": 7000, "words": 800, "category": "Technology"},
 
     # ── Level 5 · Maths (Advanced) ─────────────────────────────────────────
-    {"title": "Maths thesis chapter: Real analysis — limits and continuity",
+    {"title": "Maths thesis chapter: Real analysis - limits and continuity",
      "description": "Write an 800-word university-level chapter section on the epsilon-delta definition of a limit, continuity, and the intermediate value theorem. Include 2 rigorous proofs and 2 worked examples.",
      "instructions": "Use formal proof structure (Theorem / Proof / QED). Assume the reader has completed first-year calculus. Notation must be precise.",
      "difficulty": "ADVANCED", "level": 5, "budget_kes": 8000, "words": 850, "category": "Mathematics"},
 
-    {"title": "Maths project: Numerical methods — Newton-Raphson and bisection",
+    {"title": "Maths project: Numerical methods - Newton-Raphson and bisection",
      "description": "Write a 900-word project comparing the Newton-Raphson and bisection methods for finding roots of equations. Include derivations, convergence analysis, and fully worked iterations for f(x) = x³ − 2x − 5.",
      "instructions": "Show at least 4 iterations for each method. Include a convergence comparison table. Discuss advantages and limitations of each method.",
      "difficulty": "ADVANCED", "level": 5, "budget_kes": 7500, "words": 900, "category": "Mathematics"},
 
-    {"title": "Maths assignment: Linear algebra — eigenvalues and eigenvectors",
+    {"title": "Maths assignment: Linear algebra - eigenvalues and eigenvectors",
      "description": "Write a 700-word university assignment on eigenvalues and eigenvectors. Derive the characteristic equation, find eigenvalues and eigenvectors for two 3×3 matrices, and explain the geometric interpretation.",
      "instructions": "Show all determinant calculations. Verify results. Include one application (e.g. diagonalisation or Markov chains).",
      "difficulty": "ADVANCED", "level": 5, "budget_kes": 7000, "words": 700, "category": "Mathematics"},
@@ -189,7 +189,7 @@ JOBS = [
      "instructions": "Use LaTeX-style notation written out in text (e.g. \\sum, \\int). Rigorous proof required for convergence. Show full derivation of the heat equation solution.",
      "difficulty": "ADVANCED", "level": 6, "budget_kes": 13000, "words": 1050, "category": "Mathematics"},
 
-    {"title": "Maths thesis chapter: Group theory — subgroups, cosets, and Lagrange's theorem",
+    {"title": "Maths thesis chapter: Group theory - subgroups, cosets, and Lagrange's theorem",
      "description": "Write a 1000-word chapter section on abstract algebra covering group axioms, subgroup criteria, coset decomposition, and a complete proof of Lagrange's theorem. Include examples using Z_n and S_3.",
      "instructions": "All theorems must be formally stated and proved. Use standard algebraic notation. Include at least 2 concrete examples illustrating each major concept.",
      "difficulty": "ADVANCED", "level": 6, "budget_kes": 13500, "words": 1000, "category": "Mathematics"},
@@ -199,12 +199,12 @@ JOBS = [
      "instructions": "Include a transition matrix, derive the steady-state vector, and interpret results. Use rigorous but accessible language. Show all matrix computations.",
      "difficulty": "ADVANCED", "level": 7, "budget_kes": 18000, "words": 1200, "category": "Mathematics"},
 
-    {"title": "Maths dissertation chapter: Topology — metric spaces and compactness (1500 words)",
+    {"title": "Maths dissertation chapter: Topology - metric spaces and compactness (1500 words)",
      "description": "Write a 1500-word dissertation-level chapter on metric spaces. Cover open/closed sets, convergence, completeness, compactness (Heine-Borel theorem), and connectedness. Include full proofs for at least two major theorems.",
      "instructions": "Write at postgraduate level. All definitions must be formal. Proofs should use standard topological arguments. Include one non-trivial example (e.g. Cantor set or function spaces).",
      "difficulty": "ADVANCED", "level": 7, "budget_kes": 22000, "words": 1500, "category": "Mathematics"},
 
-    {"title": "PhD-level maths writing: Partial differential equations — existence and uniqueness",
+    {"title": "PhD-level maths writing: Partial differential equations - existence and uniqueness",
      "description": "Write a 2000-word chapter-level discussion on existence and uniqueness of solutions to second-order linear PDEs. Cover classification (elliptic, parabolic, hyperbolic), the Cauchy-Kovalevskaya theorem, and energy methods for uniqueness.",
      "instructions": "Write at doctoral level. Use precise mathematical language and formal theorem-proof structure. Reference the method of characteristics and Sobolev spaces conceptually. Include two fully worked classification examples.",
      "difficulty": "ADVANCED", "level": 8, "budget_kes": 32000, "words": 2000, "category": "Mathematics"},
