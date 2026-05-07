@@ -120,23 +120,16 @@ def process_affiliate_commissions(self, purchaser_id, plan_id, txn_code):
                 except Exception as e:
                     logger.warning(f'Commission notification failed at L{depth_index}: {e}')
 
-                # Email — sent directly (no Celery)
+                # Email — use .delay() to queue via Celery
                 try:
-                    from apps.notifications.utils import send_html_email
-                    from django.conf import settings
-                    send_html_email(
-                        user=ancestor_node.user,
-                        email_type='COMMISSION_EARNED',
-                        subject=f'You earned ${amount_usd} in referral commission!',
-                        template_name='commission_earned.html',
-                        context={
-                            'amount_usd': amount_usd,
-                            'amount_kes': f'{float(amount_usd) * settings.KES_TO_USD_RATE:.2f}',
-                            'from_username': purchaser.username,
-                            'plan_name': plan.name,
-                            'level_depth': depth_index,
-                            'txn_code': comm_txn_code,
-                        },
+                    from apps.notifications.tasks import send_commission_email
+                    send_commission_email.delay(
+                        str(ancestor_node.user.id),
+                        str(amount_usd),
+                        purchaser.username,
+                        plan.name,
+                        depth_index,
+                        comm_txn_code,
                     )
                 except Exception as e:
                     logger.warning(f'Commission email failed at L{depth_index}: {e}')

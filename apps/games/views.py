@@ -340,17 +340,9 @@ class SubmitGameResultView(APIView):
 
             if reward_usd >= Decimal('0.50'):
                 try:
-                    from apps.notifications.utils import send_html_email
-                    send_html_email(
-                        user=user,
-                        email_type='GAME_REWARD',
-                        subject=f'You won ${reward_usd} playing {game.name}!',
-                        template_name='game_reward.html',
-                        context={
-                            'game_name': game.name,
-                            'amount_usd': str(reward_usd),
-                            'txn_code': txn_code,
-                        },
+                    from apps.notifications.tasks import send_game_reward_email
+                    send_game_reward_email.delay(
+                        str(user.id), game.name, str(reward_usd), txn_code
                     )
                 except Exception as e:
                     logger.warning(f'Game reward email failed: {e}')
