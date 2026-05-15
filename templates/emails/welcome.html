@@ -1,52 +1,115 @@
 {% extends "emails/base_email.html" %}
-
-{% block status_bar %}
-<div class="status-bar success"><span class="status-dot"></span>Account Created</div>
-{% endblock %}
-
 {% block content %}
-<h1>Welcome to Nexcribe, {{ username }}</h1>
-<p class="subtitle">Your account is active and ready to use</p>
 
-<p>Hi {{ username }},</p>
-<p>You have successfully created your Nexcribe account. Here is everything you can do from day one:</p>
+<h1>Welcome to Nexcribe, {{ username }}! 🎉</h1>
+<p>Your account is live. Nexcribe is a platform where you earn real money by completing tasks — writing articles, transcribing audio, and playing skill-based games. Here's everything you need to know to get started.</p>
 
-<table class="data-table">
+<hr class="divider" />
+
+<h2>How Nexcribe Works</h2>
+<p class="muted" style="margin-bottom: 16px;">Three ways to earn — pick what suits you best.</p>
+
+<div class="feature-grid">
+  <div class="feature-item">
+    <div class="fi-icon">✍️</div>
+    <div class="fi-title">Writing Tasks</div>
+    <div class="fi-desc">Write articles, blog posts, and content pieces. Get paid per approved submission — directly to your Account Wallet.</div>
+  </div>
+  <div class="feature-item">
+    <div class="fi-icon">🎙️</div>
+    <div class="fi-title">Transcription</div>
+    <div class="fi-desc">Transcribe audio clips into clean, accurate text. Fast turnarounds and competitive per-minute rates.</div>
+  </div>
+  <div class="feature-item">
+    <div class="fi-icon">🎮</div>
+    <div class="fi-title">Games</div>
+    <div class="fi-desc">Play trivia and skill-based games to win cash prizes. New games added regularly — the more you play, the more you earn.</div>
+  </div>
+  <div class="feature-item">
+    <div class="fi-icon">🎡</div>
+    <div class="fi-title">Lucky Wheel</div>
+    <div class="fi-desc">Spin the wheel daily for a chance to win bonuses, extra spins, and cash rewards added straight to your wallet.</div>
+  </div>
+</div>
+
+<hr class="divider" />
+
+<h2>Your Earnings & Wallets</h2>
+<p>All your earnings flow into your <strong>Account Wallet</strong>. Once you reach the minimum withdrawal amount, you can cash out to M-Pesa or directly to a card.</p>
+
+<div class="info-row">
+  <span class="label">💼 Account Wallet</span>
+  <span class="value">Task & game earnings</span>
+</div>
+<div class="info-row">
+  <span class="label">🏦 Deposit Wallet</span>
+  <span class="value">Funded deposits for plan upgrades</span>
+</div>
+<div class="info-row">
+  <span class="label">🎁 Extras Wallet</span>
+  <span class="value">Bonuses, cashback & rewards</span>
+</div>
+
+<hr class="divider" />
+
+<h2>Membership Plans</h2>
+<p>Start with a free account or upgrade to a paid plan for access to higher-paying tasks, more weekly task slots, and exclusive game access.</p>
+
+<table class="summary-table">
   <thead>
-    <tr><th>Feature</th><th style="text-align:right">Details</th></tr>
+    <tr>
+      <th>Plan</th>
+      <th>Best For</th>
+      <th style="text-align:right">Weekly Tasks</th>
+    </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="td-label">Writing Tasks</td>
-      <td class="td-value">Accept and submit articles, essays, reports</td>
+      <td><strong>Starter</strong> <span class="badge badge-blue">Free</span></td>
+      <td>New members testing the platform</td>
+      <td class="val">Limited</td>
     </tr>
     <tr>
-      <td class="td-label">Transcription Tasks</td>
-      <td class="td-value">Listen and transcribe real audiobook chapters</td>
+      <td><strong>Basic</strong></td>
+      <td>Regular earners building income</td>
+      <td class="val">More slots</td>
     </tr>
     <tr>
-      <td class="td-label">Games &amp; Lucky Wheel</td>
-      <td class="td-value">Daily bonus rewards and prize spins</td>
-    </tr>
-    <tr>
-      <td class="td-label">Referral Commissions</td>
-      <td class="td-value">Earn up to 8 levels deep from your network</td>
-    </tr>
-    <tr>
-      <td class="td-label">Minimum Withdrawal</td>
-      <td class="td-value">$2.00 via M-Pesa</td>
+      <td><strong>Pro</strong></td>
+      <td>Dedicated members maximising earnings</td>
+      <td class="val">Unlimited</td>
     </tr>
   </tbody>
 </table>
 
-<div class="note note-success">
-  Payment is credited to your Account Wallet <strong>instantly</strong> the moment you submit a task — no waiting for admin approval.
-</div>
-
-<div class="btn-wrap">
-  <a class="btn" href="{{ site_url }}/dashboard">Go to My Dashboard</a>
-</div>
-
 <hr class="divider" />
-<p style="font-size:13px;color:#9ca3af;">If you did not create this account, please ignore this email or contact support immediately at <a href="mailto:support@nexcribe.com" style="color:#14b87c;">support@nexcribe.com</a>.</p>
+
+<h2>Your Next Step</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <div class="step-title">Verify your email</div>
+    <div class="step-desc">Check your inbox for a separate verification email to activate your account.</div>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <div class="step-title">Browse available tasks</div>
+    <div class="step-desc">Head to the Writing or Transcription sections and pick tasks that interest you.</div>
+  </div>
+</div>
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <div class="step-title">Submit & earn</div>
+    <div class="step-desc">Complete tasks, get them approved, and watch your Account Wallet grow.</div>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 28px;">
+  <a href="{{ site_url }}/dashboard" class="cta-btn">Go to My Dashboard →</a>
+</div>
+
 {% endblock %}

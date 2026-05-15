@@ -1,79 +1,46 @@
 {% extends "emails/base_email.html" %}
-
-{% block status_bar %}
-<div class="status-bar warning"><span class="status-dot"></span>Tasks Waiting For You</div>
-{% endblock %}
-
 {% block content %}
-<h1>You have no active plan on Nexcribe</h1>
-<p class="subtitle">{{ writing_count }} writing jobs and {{ transcription_count }} transcription tasks are live right now</p>
 
-<p>Hi {{ username }},</p>
-<p>Your account is active but you do not have a current plan. Tasks are being completed by other writers and transcriptionists right now — activate a plan to start earning.</p>
+<h1>We Miss You, {{ username }} 👋</h1>
+<p>It's been a while since you last logged in to Nexcribe. Tasks, games, and daily spin rewards are waiting — and your wallet won't grow itself.</p>
 
-<!-- Live task counts -->
-<table class="data-table">
-  <thead>
-    <tr><th>Available Right Now</th><th style="text-align:right">Count</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="td-label">Writing Jobs</td>
-      <td class="td-value td-green">{{ writing_count }}</td>
-    </tr>
-    <tr>
-      <td class="td-label">Transcription Tasks</td>
-      <td class="td-value td-green">{{ transcription_count }}</td>
-    </tr>
-    <tr>
-      <td class="td-label">Payment on Submission</td>
-      <td class="td-value">Instant — no waiting</td>
-    </tr>
-    <tr>
-      <td class="td-label">Minimum Withdrawal</td>
-      <td class="td-value">$2.00 via M-Pesa</td>
-    </tr>
-  </tbody>
-</table>
+<hr class="divider" />
 
-{% if sample_writing %}
-<p style="font-size:13px;font-weight:700;color:#0a1628;margin:24px 0 8px;">Sample Writing Jobs Available Now</p>
-<table class="data-table">
-  <thead>
-    <tr><th>Job Title</th><th style="text-align:right">Pay (KES)</th></tr>
-  </thead>
-  <tbody>
-    {% for job in sample_writing %}
-    <tr>
-      <td class="td-label">{{ job.title }}</td>
-      <td class="td-value td-green">KES {{ job.budget_kes }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endif %}
+<h2>What's Waiting For You</h2>
 
-{% if sample_transcription %}
-<p style="font-size:13px;font-weight:700;color:#0a1628;margin:24px 0 8px;">Sample Transcription Tasks Available Now</p>
-<table class="data-table">
-  <thead>
-    <tr><th>Task Title</th><th style="text-align:right">Pay (KES)</th></tr>
-  </thead>
-  <tbody>
-    {% for task in sample_transcription %}
-    <tr>
-      <td class="td-label">{{ task.title }}</td>
-      <td class="td-value td-green">KES {{ task.pay_kes }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endif %}
-
-<div class="btn-wrap" style="margin-top:28px;">
-  <a class="btn" href="{{ plans_url }}">Activate a Plan Now</a>
+<div class="feature-grid">
+  <div class="feature-item">
+    <div class="fi-icon">✍️</div>
+    <div class="fi-title">Writing Tasks</div>
+    <div class="fi-desc">New articles and content tasks have been added. Submit approved work and get paid directly.</div>
+  </div>
+  <div class="feature-item">
+    <div class="fi-icon">🎙️</div>
+    <div class="fi-title">Transcription Jobs</div>
+    <div class="fi-desc">Audio clips are available for transcription. Short tasks you can complete in minutes.</div>
+  </div>
+  <div class="feature-item">
+    <div class="fi-icon">🎮</div>
+    <div class="fi-title">Games</div>
+    <div class="fi-desc">Skill-based games with cash prizes. Play at your own pace and cash out when you're ready.</div>
+  </div>
+  <div class="feature-item">
+    <div class="fi-icon">🎡</div>
+    <div class="fi-title">Daily Spin</div>
+    <div class="fi-desc">Your free daily spin is waiting. Prizes reset every 24 hours — don't miss out.</div>
+  </div>
 </div>
 
 <hr class="divider" />
-<p style="font-size:13px;color:#9ca3af;">Plans start from KES 500. Payment is instant the moment you submit a task.</p>
+
+<p>Log back in now and pick up where you left off. Every task completed, every game won, and every spin adds to your Account Wallet balance.</p>
+
+<div style="text-align: center; margin-top: 24px;">
+  <a href="{{ site_url }}/dashboard" class="cta-btn">Log Back In →</a>
+</div>
+
+<hr class="divider" />
+
+<p class="muted">If you no longer wish to receive these reminders, you can manage your notification preferences in your account settings.</p>
+
 {% endblock %}

@@ -1,41 +1,22 @@
 {% extends "emails/base_email.html" %}
-
-{% block status_bar %}
-<div class="status-bar info"><span class="status-dot"></span>Email Verification Required</div>
-{% endblock %}
-
 {% block content %}
-<h1>Verify your email address</h1>
-<p class="subtitle">One step to complete your account setup</p>
 
-<p>Hi {{ username }},</p>
-<p>Thank you for signing up for Nexcribe. Please verify your email address to activate your account and start earning.</p>
+<h1>Verify Your Email Address</h1>
+<p>Hi {{ username }}, you're almost ready. Click the button below to verify your email and fully activate your Nexcribe account.</p>
 
-<div class="btn-wrap" style="margin: 32px 0;">
-  <a class="btn" href="{{ verify_url }}">Verify My Email Address</a>
+<div style="text-align: center; margin: 32px 0;">
+  <a href="{{ verify_url }}" class="cta-btn">Verify My Email →</a>
 </div>
 
-<table class="data-table">
-  <thead>
-    <tr><th>Detail</th><th style="text-align:right">Value</th></tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="td-label">Email</td>
-      <td class="td-value">{{ user.email }}</td>
-    </tr>
-    <tr>
-      <td class="td-label">Link Expires</td>
-      <td class="td-value">24 hours from now</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="note">
-  If the button above does not work, copy and paste the link below into your browser:<br/>
-  <span style="font-family:monospace;font-size:12px;word-break:break-all;color:#0a1628;">{{ verify_url }}</span>
+<div class="highlight-box" style="background: #f0f9ff; border-color: #bae6fd; margin-top: 8px;">
+  <p style="font-size: 13px; color: #0369a1; margin: 0;">
+    🔒 This link expires in <strong>24 hours</strong>. If you didn't create an account, you can safely ignore this email.
+  </p>
 </div>
 
 <hr class="divider" />
-<p style="font-size:13px;color:#9ca3af;">If you did not create a Nexcribe account, you can safely ignore this email. No action is needed.</p>
+
+<p class="muted">If the button doesn't work, copy and paste this link into your browser:</p>
+<p style="word-break: break-all; font-size: 13px; color: #0a7c5c;">{{ verify_url }}</p>
+
 {% endblock %}

@@ -29,25 +29,32 @@ class RegisterView(generics.CreateAPIView):
         token = EmailVerificationToken.objects.create(user=user, expires_at=expires)
 
         try:
-            from apps.notifications.utils import send_html_email
-            from django.conf import settings
-            send_html_email(
-                user=user,
-                email_type='WELCOME',
-                subject='Welcome to Nexcribe — Start Earning Today',
-                template_name='welcome.html',
-                context={'username': user.first_name or user.username},
-            )
-            verify_url = f"{settings.FRONTEND_URL}/verify-email?token={token.token}"
-            send_html_email(
-                user=user,
-                email_type='EMAIL_VERIFICATION',
-                subject='Verify Your Nexcribe Email Address',
-                template_name='verify_email.html',
-                context={'verify_url': verify_url, 'username': user.first_name or user.username},
-            )
+            from apps.notifications.tasks import send_welcome_email, send_verification_email
+            send_welcome_email.delay(str(user.id))
+            send_verification_email.delay(str(user.id), str(token.token))
         except Exception as e:
-            logger.error(f'Email send failed for {user.email}: {e}')
+            logger.warning(f'Email task queuing failed, attempting synchronous send: {e}')
+            # Fallback: send synchronously if Celery/broker is unavailable
+            try:
+                from apps.notifications.utils import send_html_email
+                from django.conf import settings
+                send_html_email(
+                    user=user,
+                    email_type='WELCOME',
+                    subject='Welcome to Nexcribe — Start Earning Today',
+                    template_name='welcome.html',
+                    context={'username': user.first_name or user.username},
+                )
+                verify_url = f"{settings.FRONTEND_URL}/verify-email?token={token.token}"
+                send_html_email(
+                    user=user,
+                    email_type='EMAIL_VERIFICATION',
+                    subject='Verify Your Nexcribe Email Address',
+                    template_name='verify_email.html',
+                    context={'verify_url': verify_url},
+                )
+            except Exception as e2:
+                logger.error(f'Synchronous email fallback also failed for {user.email}: {e2}')
 
         refresh = RefreshToken.for_user(user)
         return Response({
@@ -91,18 +98,24 @@ class PasswordResetRequestView(APIView):
             expires = timezone.now() + timedelta(hours=2)
             token = PasswordResetToken.objects.create(user=user, expires_at=expires)
             try:
-                from apps.notifications.utils import send_html_email
-                from django.conf import settings
-                reset_url = f"{settings.FRONTEND_URL}/reset-password?token={token.token}"
-                send_html_email(
-                    user=user,
-                    email_type='PASSWORD_RESET',
-                    subject='Reset Your Nexcribe Password',
-                    template_name='password_reset.html',
-                    context={'reset_url': reset_url},
-                )
+                from apps.notifications.tasks import send_password_reset_email
+                send_password_reset_email.delay(str(user.id), str(token.token))
             except Exception as e:
-                logger.error(f'Password reset email failed for {user.email}: {e}')
+                logger.warning(f'Password reset email queuing failed, attempting synchronous send: {e}')
+                # Fallback: send synchronously if Celery/broker is unavailable
+                try:
+                    from apps.notifications.utils import send_html_email
+                    from django.conf import settings
+                    reset_url = f"{settings.FRONTEND_URL}/reset-password?token={token.token}"
+                    send_html_email(
+                        user=user,
+                        email_type='PASSWORD_RESET',
+                        subject='Reset Your Nexcribe Password',
+                        template_name='password_reset.html',
+                        context={'reset_url': reset_url},
+                    )
+                except Exception as e2:
+                    logger.error(f'Synchronous password reset email fallback also failed for {user.email}: {e2}')
         except User.DoesNotExist:
             pass
         return Response({'message': 'If that email exists, a reset link has been sent.'})

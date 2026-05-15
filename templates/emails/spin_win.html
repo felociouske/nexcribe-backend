@@ -1,51 +1,53 @@
 {% extends "emails/base_email.html" %}
-
-{% block status_bar %}
-<div class="status-bar success"><span class="status-dot"></span>Lucky Wheel Win</div>
-{% endblock %}
-
 {% block content %}
-<h1>You won on the Lucky Wheel!</h1>
-<p class="subtitle">Daily spin reward</p>
 
-<p>Hi {{ user.first_name|default:user.username }},</p>
-<p>You spun the Lucky Wheel and landed on a winning prize. Your reward has been credited to your Account Wallet.</p>
+<h1>Lucky Wheel Win! 🎡</h1>
+<p>You spun the wheel and landed on <strong>{{ prize_label }}</strong>. Your reward has been credited to your Account Wallet instantly.</p>
 
-<div class="summary">
-  <div class="amount-label">Prize Won</div>
+<div class="highlight-box">
   <div class="amount">${{ amount_usd }}</div>
-  <div class="amount-sub">KES {{ amount_kes }} &nbsp;·&nbsp; Account Wallet</div>
+  <div class="amount-sub">{{ prize_label }} · Added to Account Wallet</div>
 </div>
 
-<table class="data-table">
+<h2>Spin Summary</h2>
+
+<table class="summary-table">
   <thead>
-    <tr><th>Detail</th><th style="text-align:right">Value</th></tr>
+    <tr>
+      <th>Detail</th>
+      <th style="text-align:right">Value</th>
+    </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="td-label">Prize</td>
-      <td class="td-value">{{ prize_label|default:"Cash Reward" }}</td>
+      <td>Prize</td>
+      <td class="val">{{ prize_label }}</td>
     </tr>
     <tr>
-      <td class="td-label">Amount (USD)</td>
-      <td class="td-value td-green">${{ amount_usd }}</td>
+      <td>Transaction Code</td>
+      <td class="val"><span class="txn-code">{{ txn_code }}</span></td>
     </tr>
     <tr>
-      <td class="td-label">Amount (KES)</td>
-      <td class="td-value">KES {{ amount_kes }}</td>
+      <td>Amount Won</td>
+      <td class="val" style="color: #0a7c5c;"><strong>${{ amount_usd }}</strong></td>
     </tr>
     <tr>
-      <td class="td-label">Credited To</td>
-      <td class="td-value">Account Wallet</td>
+      <td>Credited To</td>
+      <td class="val">Account Wallet</td>
+    </tr>
+    <tr>
+      <td>Status</td>
+      <td class="val"><span class="badge badge-green">Credited</span></td>
     </tr>
   </tbody>
 </table>
 
-<div class="note note-success">
-  Come back tomorrow for your next free spin. The more you play, the more you earn.
+<hr class="divider" />
+
+<p>Your daily spin resets every 24 hours. Come back tomorrow for another chance to win — or jump into writing tasks and games to keep the earnings flowing.</p>
+
+<div style="text-align: center; margin-top: 24px;">
+  <a href="{{ site_url }}/dashboard" class="cta-btn">Go to Dashboard →</a>
 </div>
 
-<div class="btn-wrap">
-  <a class="btn" href="{{ site_url }}/dashboard/wheel">Spin Again Tomorrow</a>
-</div>
 {% endblock %}

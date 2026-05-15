@@ -1,41 +1,37 @@
 {% extends "emails/base_email.html" %}
-
-{% block status_bar %}
-{% if status == 'APPROVED' %}
-<div class="status-bar success"><span class="status-dot"></span>Withdrawal Approved</div>
-{% elif status == 'REJECTED' %}
-<div class="status-bar danger"><span class="status-dot"></span>Withdrawal Rejected</div>
-{% else %}
-<div class="status-bar info"><span class="status-dot"></span>Withdrawal Pending</div>
-{% endif %}
-{% endblock %}
-
 {% block content %}
-<h1>
-  {% if status == 'APPROVED' %}Your withdrawal has been approved{% elif status == 'REJECTED' %}Your withdrawal was rejected{% else %}Withdrawal request received{% endif %}
-</h1>
-<p class="subtitle">Reference: {{ txn_code }}</p>
 
-<p>Hi {{ user.first_name|default:user.username }},</p>
-<p>
-  {% if status == 'APPROVED' %}
-    Your withdrawal request has been reviewed and approved. The funds have been sent to your registered M-Pesa number.
-  {% elif status == 'REJECTED' %}
-    Your withdrawal request has been reviewed and could not be processed. Your funds have been returned to your wallet balance.
-  {% else %}
-    We have received your withdrawal request. Our team will process it shortly.
-  {% endif %}
-</p>
+<h1>Withdrawal {{ status|title }}</h1>
 
-<!-- Transaction summary -->
-<div class="summary">
-  <div class="amount-label">Withdrawal Amount</div>
-  <div class="amount">${{ amount_usd }}</div>
-  <div class="amount-sub">KES {{ amount_kes }} &nbsp;·&nbsp; {{ wallet_label }}</div>
+{% if status == "APPROVED" %}
+<div class="status-banner approved">
+  <div class="status-icon">✅</div>
+  <div>
+    <div class="status-title approved">Your withdrawal has been approved</div>
+    <div class="status-desc">The funds have been processed and sent to your account.</div>
+  </div>
 </div>
+{% elif status == "PENDING" %}
+<div class="status-banner pending">
+  <div class="status-icon">⏳</div>
+  <div>
+    <div class="status-title pending">Your withdrawal request is being processed</div>
+    <div class="status-desc">Our team reviews withdrawals within 24 hours.</div>
+  </div>
+</div>
+{% elif status == "REJECTED" %}
+<div class="status-banner rejected">
+  <div class="status-icon">❌</div>
+  <div>
+    <div class="status-title rejected">Your withdrawal was not approved</div>
+    <div class="status-desc">Your balance has been fully restored.</div>
+  </div>
+</div>
+{% endif %}
 
-<!-- Details table -->
-<table class="data-table">
+<h2>Withdrawal Summary</h2>
+
+<table class="summary-table">
   <thead>
     <tr>
       <th>Detail</th>
@@ -44,54 +40,52 @@
   </thead>
   <tbody>
     <tr>
-      <td class="td-label">Amount (USD)</td>
-      <td class="td-value">${{ amount_usd }}</td>
+      <td>Transaction Code</td>
+      <td class="val"><span class="txn-code">{{ txn_code }}</span></td>
     </tr>
     <tr>
-      <td class="td-label">Amount (KES)</td>
-      <td class="td-value">KES {{ amount_kes }}</td>
+      <td>Amount (USD)</td>
+      <td class="val"><strong>${{ amount_usd }}</strong></td>
     </tr>
     <tr>
-      <td class="td-label">Wallet</td>
-      <td class="td-value">{{ wallet_label }}</td>
+      <td>Amount (KES)</td>
+      <td class="val">KES {{ amount_kes }}</td>
     </tr>
     <tr>
-      <td class="td-label">Status</td>
-      <td class="td-value">
-        {% if status == 'APPROVED' %}<span class="badge badge-green">Approved</span>
-        {% elif status == 'REJECTED' %}<span class="badge badge-red">Rejected</span>
-        {% else %}<span class="badge badge-amber">Pending</span>{% endif %}
+      <td>Source Wallet</td>
+      <td class="val">{{ wallet_label }}</td>
+    </tr>
+    <tr>
+      <td>Status</td>
+      <td class="val">
+        {% if status == "APPROVED" %}<span class="badge badge-green">Approved</span>
+        {% elif status == "PENDING" %}<span class="badge badge-amber">Pending</span>
+        {% elif status == "REJECTED" %}<span class="badge badge-red">Rejected</span>
+        {% else %}<span class="badge badge-blue">{{ status|title }}</span>
+        {% endif %}
       </td>
     </tr>
+    {% if reason %}
     <tr>
-      <td class="td-label">Transaction Reference</td>
-      <td class="td-value" style="font-family:monospace;font-size:12px;">{{ txn_code }}</td>
+      <td>Admin Note</td>
+      <td class="val" style="color: #991b1b;">{{ reason }}</td>
     </tr>
+    {% endif %}
   </tbody>
 </table>
 
-{% if status == 'APPROVED' %}
-<div class="note note-success">
-  Funds will arrive via M-Pesa within 24 hours. Keep your phone on and ensure your M-Pesa account is active.
-</div>
+{% if status == "APPROVED" %}
+<p>Payment has been sent. Depending on your payment method, funds typically arrive within a few minutes to a few hours.</p>
+{% elif status == "PENDING" %}
+<p>Your withdrawal is in the review queue. You'll receive another email as soon as it's processed — usually within 24 hours.</p>
+{% elif status == "REJECTED" %}
+<p>We were unable to process this withdrawal. Your full balance of <strong>${{ amount_usd }}</strong> has been restored to your {{ wallet_label }}.</p>
+{% if reason %}<p>Reason: <strong>{{ reason }}</strong></p>{% endif %}
+<p>If you believe this is an error, please contact our support team.</p>
 {% endif %}
 
-{% if status == 'REJECTED' and reason %}
-<table class="data-table" style="margin-top:8px;">
-  <tr>
-    <td class="td-label">Rejection Reason</td>
-    <td class="td-value" style="color:#c0392b;">{{ reason }}</td>
-  </tr>
-</table>
-{% endif %}
-
-{% if status == 'REJECTED' %}
-<div class="note note-danger">
-  Your funds have been returned to your {{ wallet_label }}. If you believe this is an error, please contact support with your transaction reference.
+<div style="text-align: center; margin-top: 24px;">
+  <a href="{{ site_url }}/dashboard/wallet" class="cta-btn">View My Wallet →</a>
 </div>
-{% endif %}
 
-<div class="btn-wrap">
-  <a class="btn" href="{{ site_url }}/dashboard/wallet">View Wallet Balance</a>
-</div>
 {% endblock %}

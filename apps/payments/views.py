@@ -293,23 +293,10 @@ class RequestWithdrawalView(APIView):
             logger.warning(f'Withdrawal notification failed: {e}')
 
         try:
-            from apps.notifications.utils import send_html_email
-            from django.conf import settings
-            amount_kes = float(amount_usd) * settings.KES_TO_USD_RATE
-            wallet_label = 'Account Wallet' if wallet_type == 'ACCOUNT' else 'Yields Wallet'
-            send_html_email(
-                user=user,
-                email_type='WITHDRAWAL_PENDING',
-                subject=f'Withdrawal Pending — {withdrawal.transaction_code}',
-                template_name='withdrawal_update.html',
-                context={
-                    'amount_usd': amount_usd,
-                    'amount_kes': f'{amount_kes:.2f}',
-                    'wallet_label': wallet_label,
-                    'status': 'PENDING',
-                    'txn_code': withdrawal.transaction_code,
-                    'reason': '',
-                },
+            from apps.notifications.tasks import send_withdrawal_update_email
+            send_withdrawal_update_email.delay(
+                str(user.id), float(amount_usd), wallet_type,
+                'PENDING', withdrawal.transaction_code
             )
         except Exception as e:
             logger.warning(f'Withdrawal email failed: {e}')
@@ -473,25 +460,13 @@ class AdminProcessWithdrawalView(APIView):
         except Exception as e:
             logger.warning(f'Withdrawal notification failed: {e}')
 
-        # Send email directly (no Celery)
+        # Also send email via Celery (best-effort — non-critical)
         try:
-            from apps.notifications.utils import send_html_email
-            from django.conf import settings
-            amount_kes = float(withdrawal.amount_usd) * settings.KES_TO_USD_RATE
-            wallet_label = 'Account Wallet' if wallet_type == 'ACCOUNT' else 'Yields Wallet'
-            send_html_email(
-                user=user,
-                email_type=f'WITHDRAWAL_{withdrawal.status}',
-                subject=f'Withdrawal {withdrawal.status.title()} — {withdrawal.transaction_code}',
-                template_name='withdrawal_update.html',
-                context={
-                    'amount_usd': str(withdrawal.amount_usd),
-                    'amount_kes': f'{amount_kes:.2f}',
-                    'wallet_label': wallet_label,
-                    'status': withdrawal.status,
-                    'txn_code': withdrawal.transaction_code,
-                    'reason': note,
-                },
+            from apps.notifications.tasks import send_withdrawal_update_email
+            send_withdrawal_update_email.delay(
+                str(user.id), float(withdrawal.amount_usd),
+                wallet_type, withdrawal.status,
+                withdrawal.transaction_code, reason=note
             )
         except Exception as e:
             logger.warning(f'Withdrawal email task failed (non-critical): {e}')
